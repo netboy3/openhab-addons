@@ -79,8 +79,9 @@ public class BrokerHandler extends AbstractBrokerHandler implements PinnedCallba
     @Override
     public void pinnedLearnedHash(Pin pin) {
         byte[] hash = pin.getHash();
-        if (hash == null) {
-            logger.error("Received pins hash is empty!");
+        String method = pin.getMethod();
+        if (hash == null || method == "") {
+            logger.error("Received pin hash or method is empty!");
             return;
         }
         String configKey = null;
@@ -99,7 +100,7 @@ public class BrokerHandler extends AbstractBrokerHandler implements PinnedCallba
         }
 
         Configuration thingConfig = editConfiguration();
-        thingConfig.put(configKey, HexUtils.bytesToHex(hash));
+        thingConfig.put(configKey, method + ":" + HexUtils.bytesToHex(hash));
         updateConfiguration(thingConfig);
     }
 

@@ -50,6 +50,14 @@ public class Pin {
         return type;
     }
 
+    public String getMethod() {
+        if (hashDigest != null) {
+            return hashDigest.getMethod();
+        } else {
+            return "";
+        }
+    }
+
     public byte @Nullable [] getHash() {
         return pinData;
     }
